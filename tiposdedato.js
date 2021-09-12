@@ -314,6 +314,7 @@ const CONSTANTE = 3.14159;
 let var1, var2;
 // Y también se pueden inicializaar en la misma línea
 let i = 0, j = 0, k = 0;
+i = j = k = 1;
 
 // Destructuring
 let [cadena,numero] = ["texto",1000];
@@ -329,14 +330,14 @@ console.log("\n---GLOBAL OBJECT---\n");
 // Las propiedades del objeto global son los identificadores disponibles en un programa Javascript
 // El intérprete de Javascript, al inicializarse, crea un nuevo objeto global con una serie de propiedades y métodos
 
-// Global object en el navegador
+// Global object en el navegador: window
 // window.undefined;
 // window.NaN;
 // window.Infinity;
 // window.isNaN();
 // window.String();
 
-// Global object en Node
+// Global object en Node: global
 global.NaN;
 global.Date();
 global.Array();
@@ -345,4 +346,3 @@ global.parseInt();
 // Tanto en el navegador como en Node se puede acceder al objeto global con globalThis
 globalThis.Infinity;
 }
-
