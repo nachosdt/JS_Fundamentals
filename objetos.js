@@ -75,7 +75,7 @@ objeto.hasOwnProperty("propiedad1"); // Sólo propiedades propias
 objeto.propertyIsEnumerable("propiedad1"); // Propiedades enumerables
 
 
-// Formas de enumerar propiedades no heredadas
+// Formas de enumerar las propiedades propias, no heredadas, de un objeto
 console.log("\nEnumerar las propiedades de un objeto:\n");
 for (let propiedad in objeto) {
     console.log(propiedad);
