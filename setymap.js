@@ -63,7 +63,7 @@ console.log(mapa);
 console.log(...mapa)
 for (let par of mapa) {
     [clave,valor] = par;
-    console.log(clave + "--->" + valor);
+    console.log(clave + " ---> " + valor);
 }
 
 // Los Map también tienen un método .forEach(), cuyo callback acepta 2 parametros (valor,clave)
