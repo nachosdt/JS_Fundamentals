@@ -5,16 +5,50 @@ console.log("\nITERADORES\n");
 // 1) Su contenido se puede iterar con un bucle for/of
 // 2) Admiten el operador spread ...
 
-// La iteración en JS tiene tres partes:
-// !) EL objeto iterable (objeto con un método llamado Symbol.iterator iterador que devuelve un objeto iterador)
-// 2) El objeto iterador (objeto con un método .next() que devuelve el bjeto resultado)
+// La iteración en JS consta de tres partes:
+// 1) El objeto iterable (objeto con un método llamado Symbol.iterator que devuelve un objeto iterador)
+// 2) El objeto iterador (objeto con un método .next() que devuelve el objeto resultado)
 // 3) El objeto resultado de la iteración (objeto con propiedades .value y .done)
 
+// El bloque for de un objeto iterable se puede re-escribir de esta forma
 let iterable = [1,2,3,4,5];
 let iterador = iterable[Symbol.iterator]();
 for(let elemento = iterador.next(); !elemento.done; elemento = iterador.next()) {
     console.log(elemento.value);
 }
+
+// Clase iterable
+class Intervalo { // Clase cuyas instancias son iterables
+    constructor(desde, hasta) {
+        this.desde = new Date(desde);
+        this.hasta = new Date(hasta);       
+    }
+    // Hacemos la clase iterable añadiendo el método Symbol.iterator, que
+    // devuelve un objeto iterador
+    [Symbol.iterator]() {
+        let siguiente = new Date(this.desde.toString()); // Pasamos la copia, no la referencia
+        let ultimo = this.hasta;        
+        function aumentar() {
+            let resultado = new Date(siguiente.toString()); // Pasamos la copia, no la referencia
+            siguiente.setHours(siguiente.getHours() + 24); // Incrementamos el resultado siguiente
+            return resultado;            
+        }
+        return { // Este es el objeto iterador
+            next() { // El método .next() es lo que convierte esta instancia en objeto iterador
+                return (siguiente <= ultimo) // Debe devolver un objeto resultado
+                    ? { value: aumentar().toDateString() } // Devolvemos el valor correspondiente formateado y lo incrementamos
+                    : { done: true }; // O señalamos que hemos acabado la iteración
+            },
+            // Hacemos que el objeto iterador sea a su vez iterable, por buenas prácticas
+            [Symbol.iterator]() { return this; }
+        }
+    }    
+}
+
+let intervalo = new Intervalo("01-01-2022", "01-07-2022");
+for (let dia of intervalo) { console.log(dia); }
+console.log([...intervalo]);
+
 
 /*
  * A Range object represents a range of numbers {x: from <= x <= to}
